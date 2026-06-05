@@ -3,7 +3,6 @@ name: inception
 services:
   nginx:
     build: requirements/nginx
-    image: inception_nginx
     networks:
       - inception-net
     volumes:
@@ -13,7 +12,6 @@ services:
 
   wordpress:
     build: requirements/wordpress
-    image: inception_wordpress
     environment:
       WORDPRESS_DB_HOST: mariadb:3306
       WORDPRESS_DB_NAME: wordpress
@@ -28,7 +26,6 @@ services:
 
   mariadb:
     build: requirements/mariadb
-    image: inception_mariadb
     environment:
       MYSQL_DATABASE: wordpress
       MYSQL_USER: jchuah
@@ -46,9 +43,20 @@ networks:
     driver: bridge
 
 volumes:
-  db_data:
   wp_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/${USER}/data/wp_data
 
+  db_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/${USER}/data/db_data
+ 
 secrets:
   db_password:
     file: ../secrets/db_password.txt

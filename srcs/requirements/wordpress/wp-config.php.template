@@ -1,6 +1,14 @@
 <?php
 
-define('DB_NAME', ${WORDPRESS_DB_NAME});
-define('DB_USER', ${WORDPRESS_DB_USER});
-define('DB_PASSWORD', ${WORDPRESS_DB_PASSWORD});
-define('DB_HOST', ${WORDPRESS_DB_HOST});
+define('DB_NAME', '${WORDPRESS_DB_NAME}');
+define('DB_USER', '${WORDPRESS_DB_USER}');
+define('DB_PASSWORD', '__DB_PASSWORD__');
+define('DB_HOST', '${WORDPRESS_DB_HOST}');
+
+$table_prefix = '_wp';
+
+if ( ! defined( 'ABSPATH' ) ) {
+	define( 'ABSPATH', __DIR__ . '/' );
+}
+
+require_once ABSPATH . 'wp-settings.php';

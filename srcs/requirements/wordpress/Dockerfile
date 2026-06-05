@@ -34,7 +34,7 @@ RUN sed -i \
 	-e 's|listen = .*|listen = 0.0.0.0:9000|' \
 	/etc/php84/php-fpm.d/www.conf
 
-COPY wp-config.php.template /var/www/html/wp-config.php.template 
+COPY wp-config.php.template /usr/local/share/wp-config.php.template 
 COPY entrypoint.sh /usr/local/bin/entrypoint.sh
 
 RUN chmod +x /usr/local/bin/entrypoint.sh
