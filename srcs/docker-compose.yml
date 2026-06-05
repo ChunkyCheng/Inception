@@ -1,0 +1,54 @@
+name: inception
+
+services:
+  nginx:
+    build: requirements/nginx
+    image: inception_nginx
+    networks:
+      - inception-net
+    volumes:
+      - wp_data:/var/www/html
+    ports:
+      - "80:80"
+
+  wordpress:
+    build: requirements/wordpress
+    image: inception_wordpress
+    environment:
+      WORDPRESS_DB_HOST: mariadb:3306
+      WORDPRESS_DB_NAME: wordpress
+      WORDPRESS_DB_USER: jchuah
+      WORDPRESS_DB_PASSWORD_FILE: /run/secrets/db_password
+    networks:
+      - inception-net
+    volumes:
+      - wp_data:/var/www/html
+    secrets:
+      - db_password
+
+  mariadb:
+    build: requirements/mariadb
+    image: inception_mariadb
+    environment:
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: jchuah
+      MYSQL_PASSWORD_FILE: /run/secrets/db_password
+    networks:
+      - inception-net
+    volumes:
+      - db_data:/var/lib/mysql
+    secrets:
+      - db_password
+
+networks:
+  inception-net:
+    name: inception-net
+    driver: bridge
+
+volumes:
+  db_data:
+  wp_data:
+
+secrets:
+  db_password:
+    file: ../secrets/db_password.txt
