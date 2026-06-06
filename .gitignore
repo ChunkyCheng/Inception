@@ -1,5 +1,7 @@
 secrets/
 .env
+notes.txt
 .*
 !.gitignore
 !.dockerignore
+
