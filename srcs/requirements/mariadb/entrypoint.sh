@@ -15,7 +15,7 @@ if [ ! -d "/var/lib/mysql/mysql" ]; then
 	done
 
 	mariadb -e "CREATE DATABASE IF NOT EXISTS \`${MYSQL_DATABASE}\`;"
-	mariadb -e "CREATE USER '${MYSQL_USER}'@'%' IDENTIFIED BY '$(cat $MYSQL_PASSWORD_FILE)';"
+	mariadb -e "CREATE USER '${MYSQL_USER}'@'%' IDENTIFIED BY '$(cat /run/secrets/db_password)';"
 	mariadb -e "GRANT ALL PRIVILEGES ON \`${MYSQL_DATABASE}\`.* TO '${MYSQL_USER}'@'%';"
 	mariadb -e "FLUSH PRIVILEGES;"	
 	

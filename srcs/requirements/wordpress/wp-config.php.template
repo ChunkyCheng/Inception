@@ -1,11 +1,11 @@
 <?php
 
-define('DB_NAME', '${WORDPRESS_DB_NAME}');
-define('DB_USER', '${WORDPRESS_DB_USER}');
+define('DB_NAME', '__DB_NAME__');
+define('DB_USER', '__DB_USER__');
 define('DB_PASSWORD', '__DB_PASSWORD__');
-define('DB_HOST', '${WORDPRESS_DB_HOST}');
+define('DB_HOST', '__DB_HOST__');
 
-$table_prefix = '_wp';
+$table_prefix = 'wp_';
 
 if ( ! defined( 'ABSPATH' ) ) {
 	define( 'ABSPATH', __DIR__ . '/' );

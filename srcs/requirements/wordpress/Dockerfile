@@ -6,7 +6,6 @@ RUN apk add --no-cache \
 	php84-mysqli \
 	php84-curl \
 	php84-gd \
-	php84-intl \
 	php84-mbstring \
 	php84-opcache \
 	php84-openssl \
@@ -16,8 +15,7 @@ RUN apk add --no-cache \
 	php84-xmlwriter \
 	php84-zip \
 	curl \
-	tar \
-	envsubst
+	tar
 
 RUN ln -s /usr/bin/php84 /usr/bin/php
 
@@ -35,9 +33,18 @@ RUN sed -i \
 	/etc/php84/php-fpm.d/www.conf
 
 COPY wp-config.php.template /usr/local/share/wp-config.php.template 
-COPY entrypoint.sh /usr/local/bin/entrypoint.sh
+COPY \
+	entrypoint.sh \
+	wp-db-check.php \
+	wp-is-installed.php \
+	wp-install.php \
+	/usr/local/bin/
 
-RUN chmod +x /usr/local/bin/entrypoint.sh
+RUN chmod +x \
+	/usr/local/bin/entrypoint.sh \
+	/usr/local/bin/wp-db-check.php \
+	/usr/local/bin/wp-is-installed.php \
+	/usr/local/bin/wp-install.php
 
 WORKDIR /var/www/html
 

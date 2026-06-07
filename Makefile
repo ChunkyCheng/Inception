@@ -1,16 +1,22 @@
 DIR		= --project-directory srcs
-COMPOSE = docker compose $(DIR)
+ENV		= --env-file ./.env
+COMPOSE = docker compose $(DIR) $(ENV)
 
 VOLUME_DIR = /home/${USER}/data
 
-all: up
+all:
+	@mkdir -p $(VOLUME_DIR)/wp_data
+	@mkdir -p $(VOLUME_DIR)/db_data
+	@$(COMPOSE) up -d --build
 
 up:
 	@mkdir -p $(VOLUME_DIR)/wp_data
 	@mkdir -p $(VOLUME_DIR)/db_data
 	@$(COMPOSE) up -d
 
-attach: up
+attach:
+	@mkdir -p $(VOLUME_DIR)/wp_data
+	@mkdir -p $(VOLUME_DIR)/db_data
 	@$(COMPOSE) up
 
 down:
@@ -18,6 +24,9 @@ down:
 
 build:
 	@$(COMPOSE) build
+
+logs:
+	@$(COMPOSE) logs
 
 clean:
 	@$(COMPOSE) down -v

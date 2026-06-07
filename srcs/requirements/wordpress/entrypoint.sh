@@ -9,14 +9,25 @@ fi
 
 if  [ ! -f /var/www/html/wp-config.php ]; then
 	echo "Creating wp-config.php"
-	
-	envsubst '$WORDPRESS_DB_NAME $WORDPRESS_DB_USER $WORDPRESS_DB_HOST' \
-		< /usr/local/share/wp-config.php.template \
-		> wp-config.php
-	
+
+	cat /usr/local/share/wp-config.php.template > wp-config.php
+
+	sed -i "s|__DB_NAME__|$WORDPRESS_DB_NAME|g" wp-config.php
+	sed -i "s|__DB_USER__|$WORDPRESS_DB_USER|g" wp-config.php
 	sed -i "s|__DB_PASSWORD__|$(cat /run/secrets/db_password)|g" wp-config.php
+	sed -i "s|__DB_HOST__|$WORDPRESS_DB_HOST|g" wp-config.php
 fi
 
-export WORDPRESS_DB_PASSWORD="$(cat /run/secrets/db_password)"
+echo "Waiting for MariaDB"
+while ! php84 /usr/local/bin/wp-db-check.php; do
+    sleep 1
+done
+echo "MariaDB is ready."
+
+if ! php84 /usr/local/bin/wp-is-installed.php; then
+	echo "Running automated installation"
+	php84 /usr/local/bin/wp-install.php
+	echo "Installation complete"
+fi
 
 exec php-fpm84 -F

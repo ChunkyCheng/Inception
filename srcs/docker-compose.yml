@@ -5,10 +5,14 @@ services:
     build: requirements/nginx
     networks:
       - inception-net
+    ports:
+      - "443:443"
     volumes:
       - wp_data:/var/www/html
-    ports:
-      - "80:80"
+    secrets:
+      - tls_cert
+      - tls_key
+    restart: unless-stopped
 
   wordpress:
     build: requirements/wordpress
@@ -16,26 +20,33 @@ services:
       WORDPRESS_DB_HOST: mariadb:3306
       WORDPRESS_DB_NAME: wordpress
       WORDPRESS_DB_USER: jchuah
-      WORDPRESS_DB_PASSWORD_FILE: /run/secrets/db_password
+      WORDPRESS_TITLE: Inception
+      WORDPRESS_ADMIN_USER: jchuah
+      WORDPRESS_ADMIN_EMAIL: jeremychuahtm@gmail.com
+      WORDPRESS_USER: chiang
+      WORDPRESS_USER_EMAIL: chiang@42.com
     networks:
       - inception-net
     volumes:
       - wp_data:/var/www/html
     secrets:
       - db_password
+      - wp_admin_password
+      - wp_user_password
+    restart: unless-stopped
 
   mariadb:
     build: requirements/mariadb
     environment:
       MYSQL_DATABASE: wordpress
       MYSQL_USER: jchuah
-      MYSQL_PASSWORD_FILE: /run/secrets/db_password
     networks:
       - inception-net
     volumes:
       - db_data:/var/lib/mysql
     secrets:
       - db_password
+    restart: unless-stopped
 
 networks:
   inception-net:
@@ -60,3 +71,11 @@ volumes:
 secrets:
   db_password:
     file: ../secrets/db_password.txt
+  wp_admin_password:
+    file: ../secrets/wp_admin_password.txt
+  wp_user_password:
+    file: ../secrets/wp_user_password.txt
+  tls_cert:
+    file: ../secrets/tls_cert.pem
+  tls_key:
+    file: ../secrets/tls_key.pem
