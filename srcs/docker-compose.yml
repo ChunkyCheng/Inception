@@ -18,13 +18,14 @@ services:
     build: requirements/wordpress
     environment:
       WORDPRESS_DB_HOST: mariadb:3306
-      WORDPRESS_DB_NAME: wordpress
-      WORDPRESS_DB_USER: jchuah
-      WORDPRESS_TITLE: Inception
-      WORDPRESS_ADMIN_USER: jchuah
-      WORDPRESS_ADMIN_EMAIL: jeremychuahtm@gmail.com
-      WORDPRESS_USER: chiang
-      WORDPRESS_USER_EMAIL: chiang@42.com
+      WORDPRESS_DB_NAME: $DB_NAME
+      WORDPRESS_DB_USER: $DB_ADMIN
+      WORDPRESS_DOMAIN: $WP_DOMAIN
+      WORDPRESS_TITLE: $WP_TITLE
+      WORDPRESS_ADMIN_USER: $WP_ADMIN_USER
+      WORDPRESS_ADMIN_EMAIL: $WP_ADMIN_MAIL
+      WORDPRESS_USER: $WP_USER
+      WORDPRESS_USER_EMAIL: $WP_USER_MAIL
     networks:
       - inception-net
     volumes:
@@ -38,8 +39,8 @@ services:
   mariadb:
     build: requirements/mariadb
     environment:
-      MYSQL_DATABASE: wordpress
-      MYSQL_USER: jchuah
+      MYSQL_DATABASE: $DB_NAME
+      MYSQL_USER: $DB_ADMIN
     networks:
       - inception-net
     volumes:

@@ -1,6 +1,6 @@
 <?php
 define('WP_INSTALLING', true);
-$_SERVER['HTTP_HOST'] = 'jchuah.42.fr';
+$_SERVER['HTTP_HOST'] = getenv('WORDPRESS_DOMAIN');
 $_SERVER['REQUEST_URI'] = '/';
 require '/var/www/html/wp-load.php';
 require '/var/www/html/wp-admin/includes/upgrade.php';
