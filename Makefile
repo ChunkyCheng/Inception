@@ -4,7 +4,7 @@ COMPOSE = docker compose $(DIR) $(ENV)
 
 VOLUME_DIR	= /home/${USER}/data
 
-SERVICES	:= nginx wordpress mariadb
+SERVICES	:= nginx wordpress mariadb adminer
 
 ## Build images
 all:

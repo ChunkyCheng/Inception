@@ -3,6 +3,8 @@ name: inception
 services:
   nginx:
     build: requirements/nginx
+    environment:
+      DOMAIN_NAME: $WP_DOMAIN
     networks:
       - inception-net
     ports:
@@ -47,6 +49,12 @@ services:
       - db_data:/var/lib/mysql
     secrets:
       - db_password
+    restart: unless-stopped
+
+  adminer:
+    build: requirements/bonus/adminer
+    networks:
+      - inception-net
     restart: unless-stopped
 
 networks:
