@@ -3,8 +3,9 @@ ENV		= --env-file ./.env
 COMPOSE = docker compose $(DIR) $(ENV)
 
 VOLUME_DIR	= /home/${USER}/data
+VOLUMES		= $(VOLUME_DIR)/wp_data $(VOLUME_DIR)/db_data $(VOLUME_DIR)/bonus/portainer_data
 
-SERVICES	:= nginx wordpress mariadb adminer redis
+SERVICES	:= nginx wordpress mariadb redis adminer portainer
 
 ## Build images
 all:
@@ -12,14 +13,12 @@ all:
 
 ## Run containers detached
 up:
-	@mkdir -p $(VOLUME_DIR)/wp_data
-	@mkdir -p $(VOLUME_DIR)/db_data
+	@mkdir -p $(VOLUMES)
 	@$(COMPOSE) up -d
 
 ## Run containers attached
 attach:	
-	@mkdir -p $(VOLUME_DIR)/wp_data
-	@mkdir -p $(VOLUME_DIR)/db_data
+	@mkdir -p $(VOLUMES)
 	@$(COMPOSE) up
 
 ## Stop and removes containers

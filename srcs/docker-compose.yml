@@ -63,6 +63,17 @@ services:
       - inception-net
     restart: unless-stopped
 
+  portainer:
+    build: requirements/bonus/portainer
+    networks:
+      - inception-net
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer_data:/data
+    secrets:
+      - portainer_password
+    restart: unless-stopped
+
 networks:
   inception-net:
     name: inception-net
@@ -82,6 +93,13 @@ volumes:
       type: none
       o: bind
       device: /home/${USER}/data/db_data
+
+  portainer_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/${USER}/data/bonus/portainer_data
  
 secrets:
   db_password:
@@ -94,3 +112,5 @@ secrets:
     file: ../secrets/tls_cert.pem
   tls_key:
     file: ../secrets/tls_key.pem
+  portainer_password:
+    file: ../secrets/portainer_password.txt
