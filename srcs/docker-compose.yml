@@ -51,6 +51,12 @@ services:
       - db_password
     restart: unless-stopped
 
+  redis:
+    build: requirements/bonus/redis
+    networks:
+      - inception-net
+    restart: unless-stopped
+
   adminer:
     build: requirements/bonus/adminer
     networks:

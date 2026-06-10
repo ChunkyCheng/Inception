@@ -15,13 +15,20 @@ RUN apk add --no-cache \
 	php84-xmlwriter \
 	php84-zip \
 	curl \
-	tar
+	tar \
+	unzip
 
 RUN ln -s /usr/bin/php84 /usr/bin/php
 
 RUN mkdir -p /usr/src/wordpress && \
 	curl -L https://wordpress.org/latest.tar.gz \
 	| tar -xz --strip-components=1 -C /usr/src/wordpress
+
+RUN mkdir -p /usr/src/redis-cache && \
+    wget -q "https://downloads.wordpress.org/plugin/redis-cache.latest-stable.zip" \
+        -O /tmp/redis-cache.zip && \
+    unzip -q /tmp/redis-cache.zip -d /usr/src/ && \
+    rm /tmp/redis-cache.zip
 
 RUN getent group www-data || addgroup -S www-data && \
 	getent passwd www-data || adduser -S www-data -G www-data
@@ -33,18 +40,9 @@ RUN sed -i \
 	/etc/php84/php-fpm.d/www.conf
 
 COPY wp-config.php.template /usr/local/share/wp-config.php.template 
-COPY \
-	entrypoint.sh \
-	wp-db-check.php \
-	wp-is-installed.php \
-	wp-install.php \
-	/usr/local/bin/
+COPY entrypoint.sh tools/ /usr/local/bin/
 
-RUN chmod +x \
-	/usr/local/bin/entrypoint.sh \
-	/usr/local/bin/wp-db-check.php \
-	/usr/local/bin/wp-is-installed.php \
-	/usr/local/bin/wp-install.php
+RUN chmod -R +x /usr/local/bin
 
 WORKDIR /var/www/html
 

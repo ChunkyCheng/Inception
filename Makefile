@@ -4,7 +4,7 @@ COMPOSE = docker compose $(DIR) $(ENV)
 
 VOLUME_DIR	= /home/${USER}/data
 
-SERVICES	:= nginx wordpress mariadb adminer
+SERVICES	:= nginx wordpress mariadb adminer redis
 
 ## Build images
 all:
@@ -24,11 +24,7 @@ attach:
 
 ## Stop and removes containers
 down:
-	@if [ $$($(COMPOSE) ls | wc -l) -eq 1 ]; then \
-		echo "No services running"; \
-	else \
-		$(COMPOSE) down; \
-	fi;
+	@$(COMPOSE) down
 
 ## View container logs and attach
 logs:

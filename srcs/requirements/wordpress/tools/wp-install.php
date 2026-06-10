@@ -21,4 +21,4 @@ $user_id = wp_create_user(
 );
 
 $user = new WP_User($user_id);
-$user->set_role('editor');
+$user->set_role('subscriber');
