@@ -1,11 +1,13 @@
-DIR		= --project-directory srcs
-ENV		= --env-file ./.env
-COMPOSE = docker compose $(DIR) $(ENV)
+DIR				= --project-directory srcs
+ENV				= --env-file ./.env
+PASV_ADDRESS	= $(shell ip route get 1 | awk '{print $$7; exit}')
+COMPOSE 		= PASV_ADDRESS=$(PASV_ADDRESS) docker compose $(DIR) $(ENV)
 
 VOLUME_DIR	= /home/${USER}/data
 VOLUMES		= $(VOLUME_DIR)/wp_data $(VOLUME_DIR)/db_data $(VOLUME_DIR)/bonus/portainer_data
 
-SERVICES	:= nginx wordpress mariadb redis adminer portainer
+SERVICES	:= nginx wordpress mariadb redis vsftpd adminer portainer
+
 
 ## Build images
 all:

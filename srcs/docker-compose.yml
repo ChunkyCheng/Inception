@@ -56,6 +56,23 @@ services:
     networks:
       - inception-net
     restart: unless-stopped
+  
+  vsftpd:
+    build: requirements/bonus/vsftpd
+    environment:
+      PASV_ADDRESS: $PASV_ADDRESS
+      VSFTPD_USER: $VSFTPD_USER
+    networks:
+      - inception-net
+    ports:
+      - "21:21"
+      - "21000-21010:21000-21010"
+    volumes:
+      - wp_data:/var/www/html
+    secrets:
+      - vsftpd_password
+    stop_grace_period: 2s
+    restart: unless-stopped
 
   adminer:
     build: requirements/bonus/adminer
@@ -112,5 +129,7 @@ secrets:
     file: ../secrets/tls_cert.pem
   tls_key:
     file: ../secrets/tls_key.pem
+  vsftpd_password:
+    file: ../secrets/vsftpd_password.txt
   portainer_password:
     file: ../secrets/portainer_password.txt
