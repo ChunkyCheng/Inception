@@ -1,7 +1,6 @@
 DIR				= --project-directory srcs
-ENV				= --env-file ./.env
 PASV_ADDRESS	= $(shell ip route get 1 | awk '{print $$7; exit}')
-COMPOSE 		= PASV_ADDRESS=$(PASV_ADDRESS) docker compose $(DIR) $(ENV)
+COMPOSE 		= PASV_ADDRESS=$(PASV_ADDRESS) docker compose $(DIR)
 
 VOLUME_DIR	= /home/${USER}/data
 VOLUMES		= $(VOLUME_DIR)/wp_data $(VOLUME_DIR)/db_data $(VOLUME_DIR)/bonus/portainer_data
