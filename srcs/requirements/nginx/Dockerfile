@@ -9,4 +9,4 @@ RUN chmod +x /usr/local/bin/entrypoint.sh
 
 RUN mkdir -p /var/www/adminer && touch /var/www/adminer/adminer.php
 
-CMD ["/usr/local/bin/entrypoint.sh"]
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]

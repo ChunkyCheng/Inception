@@ -15,4 +15,4 @@ RUN mkdir -p /var/www/adminer/ && \
 
 RUN sed -i 's|listen = .*|listen = 0.0.0.0:9000|' /etc/php84/php-fpm.d/www.conf
 
-CMD ["php-fpm84", "-F"]
+ENTRYPOINT ["php-fpm84", "-F"]
