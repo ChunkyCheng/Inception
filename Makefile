@@ -49,14 +49,18 @@ $(foreach service,$(SERVICES),$(eval $(call SHELL_TEMPLATE,$(service))))
 ## Remove volumes
 clean:
 	@$(COMPOSE) down -v
-	@sudo chown -R ${USER}:${USER} $(VOLUME_DIR)
-	@rm -rf $(VOLUME_DIR)
+	@if [ -d $(VOLUME_DIR) ]; then \
+		sudo chown -R ${USER}:${USER} $(VOLUME_DIR); \
+		rm -rf $(VOLUME_DIR); \
+	fi;
 
 ## Remove volumes and images
 fclean:	
 	@$(COMPOSE) down --rmi all -v
-	@sudo chown -R ${USER}:${USER} $(VOLUME_DIR)
-	@rm -rf $(VOLUME_DIR)
+	@if [ -d $(VOLUME_DIR) ]; then \
+		sudo chown -R ${USER}:${USER} $(VOLUME_DIR); \
+		rm -rf $(VOLUME_DIR); \
+	fi;
 
 ## Remove volumes and images then rebuild
 re: fclean all

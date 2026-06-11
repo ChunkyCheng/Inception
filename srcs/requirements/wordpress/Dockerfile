@@ -1,4 +1,4 @@
-FROM alpine:3.22
+FROM alpine:3.23
 
 RUN apk add --no-cache \
 	php84 \
@@ -17,8 +17,6 @@ RUN apk add --no-cache \
 	curl \
 	tar \
 	unzip
-
-RUN ln -s /usr/bin/php84 /usr/bin/php
 
 RUN mkdir -p /usr/src/wordpress && \
 	curl -L https://wordpress.org/latest.tar.gz \
