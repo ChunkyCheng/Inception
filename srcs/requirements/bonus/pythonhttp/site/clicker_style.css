@@ -1,0 +1,49 @@
+.click-area {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 2rem;
+	min-height: 60vh;
+}
+
+.click-btn {
+	background: #1e2130;
+	border: 1px solid #2d3148;
+	border-radius: 12px;
+	color: #f1f5f9;
+	font-size: 1.1rem;
+	font-weight: 600;
+	padding: 1rem 2.5rem;
+	cursor: pointer;
+	transition: border-color 0.2s, transform 0.2s, background 0.2s;
+}
+
+.click-btn:hover {
+	border-color: #4f6ef7;
+	background: #252840;
+	transform: translateY(-2px);
+}
+
+.click-btn:active {
+	transform: translateY(0);
+}
+
+.counter {
+	font-size: 1rem;
+	color: #64748b;
+}
+
+.counter span {
+	color: #f1f5f9;
+	font-weight: 600;
+}
+
+.mystery {
+	display: none;
+	text-align: center;
+}
+
+.mystery.visible {
+	display: block;
+}

@@ -79,6 +79,16 @@ services:
     stop_grace_period: 2s
     restart: unless-stopped
 
+  pythonhttp:
+    build: requirements/bonus/pythonhttp
+    image: pythonhttp:1.0
+    environment:
+      DOMAIN_NAME: $WP_DOMAIN
+    networks:
+      - inception-net
+    stop_grace_period: 2s
+    restart: unless-stopped
+
   adminer:
     build: requirements/bonus/adminer
     image: adminer:1.0

@@ -5,7 +5,7 @@ COMPOSE 		= PASV_ADDRESS=$(PASV_ADDRESS) docker compose $(DIR)
 VOLUME_DIR	= /home/${USER}/data
 VOLUMES		= $(VOLUME_DIR)/wp_data $(VOLUME_DIR)/db_data $(VOLUME_DIR)/bonus/portainer_data
 
-SERVICES	:= nginx wordpress mariadb redis vsftpd adminer portainer
+SERVICES	:= nginx wordpress mariadb redis vsftpd pythonhttp adminer portainer
 
 
 ## Build images

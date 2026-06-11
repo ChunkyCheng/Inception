@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inception</title>
+    <link rel="stylesheet" href="main_style.css">
+	<link rel="stylesheet" href="clicker_style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+        </header>
+
+        <main>
+            <div class="click-area">
+                <button class="click-btn" onclick="handleClick()">Click me</button>
+                <p class="counter">Clicks: <span id="count">0</span> / 100</p>
+                <div class="mystery" id="mystery">
+                    <p>You found it.</p>
+                    <a href="https://www.youtube.com/watch?v=2qBlE2-WL60" target="_blank">Mystery Link</a>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        let clicks = 0;
+
+        function handleClick() {
+            clicks++;
+            document.getElementById('count').textContent = clicks;
+            if (clicks >= 100) {
+                document.getElementById('mystery').classList.add('visible');
+            }
+        }
+    </script>
+</body>
+</html>
