@@ -19,7 +19,7 @@ The aim of Inception is to set up a simple WordPress website through a container
 
 ---
 
-## Setup
+## Setup Instructions
 
 ### 1. Environment
 
